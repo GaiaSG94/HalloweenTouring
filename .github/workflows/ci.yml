@@ -1,0 +1,15 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild check (index.html matches parts/)
+        run: python3 build.py --check
+      - name: CDN URLs reachable
+        run: |
+          curl -sSf --max-time 20 -o /dev/null https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js
+          curl -sSf --max-time 20 -o /dev/null https://unpkg.com/three-globe@2.45.6/example/img/earth-blue-marble.jpg
+          curl -sSf --max-time 20 -o /dev/null https://unpkg.com/three-globe@2.45.6/example/img/earth-night.jpg
