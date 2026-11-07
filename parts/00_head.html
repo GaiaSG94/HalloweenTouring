@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>HalloweenTouring — La Terre et ses monuments</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #01030a; }
+  canvas { display: block; touch-action: none; }
+  #ui {
+    position: fixed; top: 14px; left: 16px; z-index: 5; pointer-events: none;
+    color: #e8eef6; font: 600 15px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: 0.02em; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  }
+  #ui small { display: block; font-weight: 400; font-size: 12px; opacity: 0.78; }
+  #hint {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 5;
+    pointer-events: none; white-space: nowrap;
+    color: #dbe5f2; font: 400 12px/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: rgba(3, 10, 22, 0.62); border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 8px 14px; border-radius: 999px;
+  }
+  #labels { position: fixed; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+  .lbl {
+    position: absolute; left: 0; top: 0; transform: translate(-50%, -135%);
+    font: 500 11px/1.2 system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #eef3fa; background: rgba(3, 10, 22, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  #err {
+    position: fixed; left: 12px; right: 12px; bottom: 52px; z-index: 9; display: none;
+    color: #ffd9d9; background: rgba(58, 13, 13, 0.92); border: 1px solid #7c2a2a;
+    font: 400 13px/1.45 system-ui, sans-serif; padding: 10px 14px; border-radius: 8px;
+  }
+  @media (max-width: 640px) {
+    #ui { font-size: 12px; top: 10px; left: 12px; }
+    #ui small { display: none; }
+    #hint { font-size: 11px; bottom: 10px; }
+  }
+</style>
+<script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="ui">HalloweenTouring<small>La Terre et ses monuments — glisser pour tourner, molette pour zoomer</small></div>
+<div id="labels"></div>
+<div id="hint">Glisser : tourner &nbsp;·&nbsp; Molette / pincement : zoomer</div>
+<div id="err"></div>
+<script type="module">
+import * as THREE from 'three';
